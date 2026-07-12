@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SelfLift | Project Page</title>
+    <meta
+      name="description"
+      content="SelfLift project page for high-fidelity accelerated diffusion generation through self-lifted resolution transition."
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Page navigation">
+        <a class="brand" href="#">SelfLift</a>
+        <div class="nav-links">
+          <a href="#abstract">Abstract</a>
+          <a href="#visual">Visual</a>
+          <a href="#method">Method</a>
+          <a href="#results">Results</a>
+        </div>
+      </nav>
+
+      <section class="hero">
+        <p class="eyebrow">Accelerated Diffusion Generation</p>
+        <h1>SelfLift</h1>
+        <p class="subtitle">
+          Self-lifted resolution transition for fast, native, high-fidelity text-to-image generation.
+        </p>
+        <p class="venue-line">FLUX.2-Klein-9B · Z-Image-Turbo · 1024 x 1024 evaluation</p>
+        <div class="actions" aria-label="Project links">
+          <a class="button primary" href="#visual">See Visual Results</a>
+          <a class="button" href="#method">Method Overview</a>
+          <a class="button" href="#results">Main Table</a>
+        </div>
+        <div class="metric-strip" aria-label="Headline results">
+          <div>
+            <strong>29.61x</strong>
+            <span>FLUX.2 speedup</span>
+          </div>
+          <div>
+            <strong>22.70</strong>
+            <span>PickScore</span>
+          </div>
+          <div>
+            <strong>19.21x</strong>
+            <span>Z-Image-Turbo speedup</span>
+          </div>
+        </div>
+      </section>
+    </header>
+
+    <main>
+      <section id="abstract" class="section">
+        <div class="split">
+          <div class="section-heading">
+            <p class="section-kicker">Overview</p>
+            <h2>Abstract</h2>
+          </div>
+          <div class="abstract">
+            <p>
+              SelfLift accelerates high-resolution diffusion generation by moving most denoising
+              computation to a low-resolution rollout, then performing a native high-resolution
+              transition that preserves clean content while selectively lifting uncertain or artifact-prone
+              details. SelfLift-zero introduces an artifact-aware transition module that combines latent
+              and pixel branches, detects risky transition regions, and applies masked lifting before
+              the final high-resolution rollout.
+            </p>
+            <p>
+              SelfLift-rich further improves this transition through on-policy self-lift fine-tuning,
+              using the model's own low-to-high-resolution trajectories as supervision. Across
+              FLUX.2-Klein-9B and Z-Image-Turbo, SelfLift improves the speed-quality trade-off while
+              retaining strong image quality and rule-following behavior.
+            </p>
+            <div class="abstract-notes" aria-label="SelfLift highlights">
+              <span>Artifact-aware transition</span>
+              <span>Native high-resolution rollout</span>
+              <span>On-policy self-lift tuning</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="visual" class="section">
+        <div class="section-heading centered">
+          <p class="section-kicker">Qualitative Comparison</p>
+          <h2>Visual Results</h2>
+          <p class="section-lead">
+            SelfLift keeps the page centered on what matters: fast generation without the blur,
+            drift, and text artifacts that often appear during aggressive resolution transition.
+          </p>
+        </div>
+        <figure class="figure figure-stage">
+          <img src="assets/selflift_visual.png" alt="SelfLift qualitative and trade-off visual comparison">
+          <figcaption>
+            SelfLift achieves a stronger latency-quality trade-off while preserving text rendering and
+            visual fidelity in challenging high-resolution prompts.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section id="method" class="section">
+        <div class="section-heading centered">
+          <p class="section-kicker">Approach</p>
+          <h2>Method</h2>
+          <p class="section-lead">
+            The method combines a low-resolution rollout, an artifact-aware lifting transition, and
+            a short high-resolution rollout.
+          </p>
+        </div>
+        <div class="step-row" aria-label="Method stages">
+          <div><span>01</span> Low-resolution rollout</div>
+          <div><span>02</span> Artifact-aware transition</div>
+          <div><span>03</span> High-resolution rollout</div>
+          <div><span>04</span> SelfLift-rich tuning</div>
+        </div>
+        <figure class="figure figure-stage">
+          <img src="assets/selflift_overview.png" alt="SelfLift method overview diagram">
+          <figcaption>
+            SelfLift first performs a low-resolution rollout, then applies artifact-aware resolution
+            transition before a short high-resolution rollout. SelfLift-rich adds on-policy self-lift
+            fine-tuning to improve the transition trajectory.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section id="results" class="section">
+        <div class="section-heading centered">
+          <p class="section-kicker">Quantitative Evaluation</p>
+          <h2>Main Results</h2>
+          <p class="section-lead">
+            SelfLift is evaluated against caching, transition, and acceleration baselines on both
+            FLUX.2-Klein-9B and Z-Image-Turbo.
+          </p>
+        </div>
+        <figure class="figure figure-stage table-figure">
+          <img src="assets/main_table.png" alt="Quantitative comparison table on FLUX.2-Klein-9B and Z-Image-Turbo">
+          <figcaption>
+            Quantitative comparison on FLUX.2-Klein-9B and Z-Image-Turbo at 1024 x 1024 resolution.
+          </figcaption>
+        </figure>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>SelfLift project page · Static preview</p>
+    </footer>
+  </body>
+</html>
