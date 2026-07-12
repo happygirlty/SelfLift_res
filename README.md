@@ -35,5 +35,5 @@ Settings -> Pages -> Deploy from a branch -> main -> /root
 The project URL should be:
 
 ```text
-https://happygirlty.github.io/SelfLift.github.io/
+https://happygirlty.github.io/SelfLift_res/
 ```
