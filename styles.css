@@ -359,6 +359,21 @@ h1 {
   text-transform: uppercase;
 }
 
+.resource-link-contact {
+  flex-basis: 100%;
+}
+
+.resource-link-contact::after {
+  content: "@";
+}
+
+.resource-link-contact strong {
+  color: #9edcff;
+  font-size: 11px;
+  text-transform: none;
+  overflow-wrap: anywhere;
+}
+
 .variant-strip {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
