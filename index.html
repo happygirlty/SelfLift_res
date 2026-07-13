@@ -8,7 +8,7 @@
       name="description"
       content="SelfLift project page for self-recovering resolution transition in few-step diffusion models."
     >
-    <link rel="stylesheet" href="styles.css?v=20260713-0936">
+    <link rel="stylesheet" href="styles.css?v=20260713-1525">
   </head>
   <body>
     <header class="hero-shell">
@@ -29,6 +29,16 @@
           <p class="subtitle">
             Self-Recovering Resolution Transition for Accelerating Few-Step Diffusion Models.
           </p>
+          <p class="authors-line" aria-label="Authors">
+            Tingyan Wen<sup>*</sup>, Chenqian Yan<sup>*</sup>, Xurui Peng, Sheng Lin,
+            Jiateng Wei, Xiazhang Fang, Shuai Wang, Wengyi Zhan, Jing Xu,
+            Fangmin Chen<sup>&dagger;</sup>, Xueqian Wang<sup>&dagger;</sup>,
+            Songwei Liu<sup>&dagger;</sup>
+          </p>
+          <p class="author-notes" aria-label="Author notes">
+            <span><sup>*</sup> Equal contribution.</span>
+            <span><sup>&dagger;</sup> Corresponding authors.</span>
+          </p>
           <p class="venue-line">Training-free transition. Optional on-policy self lift.</p>
           <div class="hero-flow" aria-label="Resolution transition sketch">
             <span>Low-resolution rollout</span>
@@ -40,16 +50,12 @@
         </div>
 
         <div class="resource-panel" aria-label="Project links">
-          <a class="resource-link" href="#" aria-label="arXiv link placeholder">
-            <span>arXiv</span>
+          <a class="resource-link" href="#" aria-label="Paper link placeholder">
+            <span>Paper</span>
             <strong>Coming soon</strong>
           </a>
           <a class="resource-link" href="#" aria-label="Code link placeholder">
             <span>Code</span>
-            <strong>Coming soon</strong>
-          </a>
-          <a class="resource-link" href="#" aria-label="Paper link placeholder">
-            <span>Paper</span>
             <strong>Coming soon</strong>
           </a>
           <a class="resource-link" href="#" aria-label="Website link placeholder">
@@ -61,12 +67,18 @@
 
       <section class="variant-strip" aria-label="SelfLift variants">
         <article>
-          <span>SelfLift-zero</span>
-          <p>Training-free artifact-aware transition into a stable high-resolution latent state.</p>
+          <div class="variant-head">
+            <span class="variant-icon variant-icon-zero" aria-hidden="true"></span>
+            <span class="variant-title">SelfLift-zero</span>
+          </div>
+          <p>Training-free, plug-and-play artifact-aware transition into a stable high-resolution latent state.</p>
         </article>
         <article>
-          <span>SelfLift-rich</span>
-          <p>On-policy self lift for richer high-resolution image distributions.</p>
+          <div class="variant-head">
+            <span class="variant-icon variant-icon-rich" aria-hidden="true"></span>
+            <span class="variant-title">SelfLift-rich</span>
+          </div>
+          <p>On-policy training for richer high-resolution image distributions.</p>
         </article>
       </section>
     </header>
@@ -145,7 +157,15 @@
               <span>Qualitative comparison</span>
               <span>Native, fast, high-fidelity</span>
             </div>
-            <img src="assets/selflift_visual_c_crop.png" alt="SelfLift qualitative comparison against baseline methods">
+            <picture>
+              <source srcset="assets/selflift_visual_c_uhd.webp" type="image/webp">
+              <img
+                src="assets/selflift_visual_c_uhd.png"
+                alt="SelfLift qualitative comparison against baseline methods"
+                loading="lazy"
+                decoding="async"
+              >
+            </picture>
             <figcaption>
               SelfLift keeps text and local details stable while avoiding artifact-prone or
               external-model-dependent transitions.
@@ -159,7 +179,7 @@
                 <span>Risk vs. speed</span>
               </div>
               <div class="plot-frame plot-frame-transition">
-                <img src="assets/selflift_visual_a_crop.png" alt="High-frequency energy versus transition step analysis">
+                <img src="assets/selflift_visual_a_current_crop.png" alt="High-frequency energy versus transition step analysis">
               </div>
               <figcaption>
                 Later transitions can bring stronger speed gains, but make the transition more risky.
@@ -172,7 +192,7 @@
                 <span>SelfLift-zero and SelfLift-rich</span>
               </div>
               <div class="plot-frame plot-frame-tradeoff">
-                <img src="assets/selflift_visual_b_latest_crop.png" alt="Quality versus latency comparison plot">
+                <img src="assets/selflift_visual_b_current_clean.png" alt="Quality versus latency comparison plot">
               </div>
               <figcaption>
                 SelfLift-zero and SelfLift-rich move the trade-off toward higher quality at lower latency.
