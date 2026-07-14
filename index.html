@@ -99,8 +99,8 @@
               <span class="abstract-card-label">Bottleneck</span>
               <p>
                 Recent few-step diffusion models have shifted the inference bottleneck from sampling
-                steps to spatial token computation. Resolution transition offers an effective solution by
-                exploiting the coarse-to-fine generation process, but existing transition strategies can
+                steps to spatial token computation. Resolution transition offers an effective way to
+                exploit the coarse-to-fine generation process, but existing transition strategies can
                 introduce artifacts and semantic drift that are difficult to recover under few-step sampling.
               </p>
             </article>
@@ -112,8 +112,9 @@
                 a training-free <strong class="term-lift">artifact-aware consistency lift</strong> to
                 correct transition errors without additional denoising steps or external super-resolution
                 models. Building upon this stable transition, SelfLift-rich further introduces an
-                <strong class="term-training">on-policy self-recovering</strong> training strategy for the 
-                resolution transition trajectory, leveraging high-resolution generation priors
+                <strong class="term-training">on-policy self-recovering</strong> training strategy for the
+                same low-to-high resolution transition trajectory used at inference, leveraging
+                high-resolution generation priors
                 to recover richer semantics and fine-grained details while avoiding off-policy mismatch.
               </p>
             </article>
@@ -137,10 +138,11 @@
               </div>
             </article>
             <div class="tag-row" aria-label="SelfLift highlights">
-              <span>SelfLift-zero</span>
-              <span>SelfLift-rich</span>
-              <span>VAE-consistent latent lift</span>
-              <span>On-policy self lift</span>
+              <span>Few-Step Diffusion Models</span>
+              <span>Efficient Inference</span>
+              <span>Resolution Transition</span>
+              <span>Artifact-Aware Consistency Lift</span>
+              <span>On-Policy Self-Recovering</span>
             </div>
           </div>
         </div>
@@ -213,7 +215,7 @@
           <p class="section-lead">
             SelfLift reframes resolution transition as a self-recovering lift from a low-resolution
             rollout to a stable high-resolution latent state, then optionally improves this trajectory
-            with on-policy self lift.
+            with on-policy self-recovering.
           </p>
         </div>
         <figure class="media-card">
@@ -222,7 +224,7 @@
             <span>Self-recovering resolution transition</span>
           </div>
           <div class="media-scroll">
-            <img src="assets/selflift_overview.png?v=20260714-1200" alt="SelfLift method overview diagram">
+            <img src="assets/selflift_overview.png?v=20260714-1522" alt="SelfLift method overview diagram">
           </div>
           <figcaption>
             The transition module compares latent and pixel branches, builds a delta and top-p mask,
