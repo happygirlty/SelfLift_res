@@ -39,7 +39,7 @@
             <span><sup>*</sup> Equal contribution.</span>
             <span><sup>&dagger;</sup> Corresponding authors.</span>
           </p>
-          <p class="venue-line">Training-free transition. Optional on-policy selflift fine-tuning.</p>
+          <p class="venue-line">Training-free transition. Optional on-policy self-recovering training.</p>
           <div class="hero-flow" aria-label="Resolution transition sketch">
             <span>Low-resolution rollout</span>
             <i></i>
@@ -100,21 +100,21 @@
               <p>
                 Recent few-step diffusion models have shifted the inference bottleneck from sampling
                 steps to spatial token computation. Resolution transition offers an effective solution by
-                exploiting the coarse-to-fine generation process, but resolution transitions introduce
-                artifacts and semantic drift that are difficult to recover under few-step sampling.
+                exploiting the coarse-to-fine generation process, but existing transition strategies can
+                introduce artifacts and semantic drift that are difficult to recover under few-step sampling.
               </p>
             </article>
             <article class="abstract-card">
               <span class="abstract-card-label">Self-recovering transition</span>
               <p>
                 We propose <strong class="term-brand">SelfLift</strong>, a self-recovering resolution
-                transition framework for efficient few-step diffusion models. SelfLift-Zero introduces
+                transition framework for efficient few-step diffusion models. SelfLift-zero introduces
                 a training-free <strong class="term-lift">artifact-aware consistency lift</strong> to
                 correct transition errors without additional denoising steps or external super-resolution
-                models. Building upon this stable transition, SelfLift-Rich further introduces
-                <strong class="term-training">on-policy self lift fine-tuning</strong>, leveraging
-                high-resolution generation priors along the original resolution-transition trajectory to
-                recover richer semantics and fine-grained details without off-policy mismatch.
+                models. Building upon this stable transition, SelfLift-rich further introduces an
+                <strong class="term-training">on-policy self-recovering</strong> training strategy for the 
+                resolution transition trajectory, leveraging high-resolution generation priors
+                to recover richer semantics and fine-grained details while avoiding off-policy mismatch.
               </p>
             </article>
             <article class="abstract-card abstract-card-wide">
