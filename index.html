@@ -8,7 +8,7 @@
       name="description"
       content="SelfLift project page for self-recovering resolution transition in few-step diffusion models."
     >
-    <link rel="stylesheet" href="styles.css?v=20260714-1200">
+    <link rel="stylesheet" href="styles.css?v=20260804-local-table">
   </head>
   <body>
     <header class="hero-shell">
@@ -17,6 +17,7 @@
         <div class="nav-links">
           <a href="#abstract">Abstract</a>
           <a href="#comparison">Comparison</a>
+          <a href="#analysis">Analysis</a>
           <a href="#method">Method</a>
           <a href="#experiments">Experiments</a>
         </div>
@@ -75,14 +76,14 @@
             <span class="variant-icon variant-icon-zero" aria-hidden="true"></span>
             <span class="variant-title">SelfLift-zero</span>
           </div>
-          <p>Training-free, plug-and-play artifact-aware transition into a stable high-resolution latent state.</p>
+          <p>No training or external super-resolution. Selectively corrects high-risk transition regions.</p>
         </article>
         <article>
           <div class="variant-head">
             <span class="variant-icon variant-icon-rich" aria-hidden="true"></span>
             <span class="variant-title">SelfLift-rich</span>
           </div>
-          <p>On-policy training for richer high-resolution image distributions.</p>
+          <p>Distills the transition into a latent lifter and learns recovery on student-visited trajectories.</p>
         </article>
       </section>
     </header>
@@ -123,18 +124,18 @@
                 <span class="abstract-card-label">Quality preserved</span>
                 <p>
                   SelfLift is lightweight and orthogonal to existing acceleration techniques.
-                  Experiments on <strong class="term-model">FLUX.2-Klein-9b</strong> and
-                  <strong class="term-model">Z-Image-Turbo</strong> show that SelfLift achieves up to
+                  On <strong class="term-model">FLUX.2-Klein-9b</strong> and
+                  <strong class="term-model">Z-Image-Turbo</strong>, SelfLift-rich reduces native
+                  few-step latency by <strong class="term-speed">41.5%</strong> and
+                  <strong class="term-speed">44.1%</strong>, reaching
                   <strong class="term-speed">29.61&times;</strong> and
-                  <strong class="term-speed">19.21&times;</strong> acceleration, respectively, while
-                  maintaining superior generation quality. These results demonstrate the effectiveness
-                  of self-recovering resolution transition for efficient high-resolution diffusion
-                  generation.
+                  <strong class="term-speed">19.21&times;</strong> overall speedups while improving
+                  preference, aesthetics, CLIP alignment, and GenEval over SelfLift-zero.
                 </p>
               </div>
               <div class="abstract-metrics" aria-label="SelfLift outcome highlights">
-                <span><strong>Faster speed</strong>Lower latency generation</span>
-                <span><strong>Higher quality</strong>Richer semantics and details</span>
+                <span><strong>Native speed</strong>No external SR model</span>
+                <span><strong>Richer recovery</strong>Student-trajectory supervision</span>
               </div>
             </article>
             <div class="tag-row" aria-label="SelfLift highlights">
@@ -153,8 +154,8 @@
           <p class="section-kicker">02 / Effect Comparison</p>
           <h2>Effect Comparison</h2>
           <p class="section-lead">
-            SelfLift targets the aggressive-resolution regime where artifacts, text drift, and
-            quality degradation usually become visible.
+              SelfLift targets aggressive progressive-resolution inference, where direct transitions
+            often trigger ghosting, text drift, spatial drift, and oversmoothing.
           </p>
         </div>
         <div class="visual-stack">
@@ -163,32 +164,31 @@
               <span>Qualitative comparison</span>
               <span>Native, fast, high-fidelity</span>
             </div>
-            <picture>
-              <source srcset="assets/selflift_visual_c_xl.webp?v=20260714-1216" type="image/webp">
-              <img
-                src="assets/selflift_visual_c_uhd.png?v=20260714-1216"
-                alt="SelfLift qualitative comparison against baseline methods"
-                loading="lazy"
-                decoding="async"
-              >
-            </picture>
+            <img
+              src="assets/selflift_show_paper.png?v=20260804"
+              alt="SelfLift qualitative comparison against baseline methods"
+              loading="lazy"
+              decoding="async"
+            >
             <figcaption>
-              SelfLift keeps text and local details stable while avoiding artifact-prone or
-              external-model-dependent transitions.
+              Vanilla, RaLu, and Speed exhibit visible transition artifacts under aggressive
+              acceleration. SelfLift-zero stabilizes model-native transitions, and SelfLift-rich
+              recovers richer text and high-frequency details.
             </figcaption>
           </figure>
 
           <div class="visual-pair">
             <figure class="visual-card">
               <div class="media-toolbar">
-                <span>Transition-step analysis</span>
-                <span>Risk vs. speed</span>
+                <span>Runtime breakdown</span>
+                <span>FLUX.2-Klein-9B</span>
               </div>
-              <div class="plot-frame plot-frame-transition">
-                <img src="assets/selflift_visual_a_current_crop.png?v=20260714-1200" alt="High-frequency energy versus transition step analysis">
+              <div class="evidence-frame">
+                <img src="assets/selflift_runtime_breakdown.png?v=20260804" alt="Stage-wise runtime breakdown for SelfLift">
               </div>
               <figcaption>
-                Later transitions can bring stronger speed gains, but make the transition more risky.
+                Low-resolution rollout shrinks early spatial-token computation, while SelfLift keeps
+                the remaining high-resolution path short and model-native.
               </figcaption>
             </figure>
 
@@ -198,24 +198,78 @@
                 <span>SelfLift-zero and SelfLift-rich</span>
               </div>
               <div class="plot-frame plot-frame-tradeoff">
-                <img src="assets/selflift_visual_b_current_clean.png?v=20260714-1200" alt="Quality versus latency comparison plot">
+                <img src="assets/selflift_visual_b_current_clean.png?v=20260804" alt="Quality versus latency comparison plot">
               </div>
               <figcaption>
-                SelfLift-zero and SelfLift-rich move the trade-off toward higher quality at lower latency.
+                SelfLift-zero forms a training-free native transition, while SelfLift-rich moves the
+                frontier further with trajectory-aligned high-resolution recovery.
               </figcaption>
             </figure>
           </div>
         </div>
       </section>
 
+      <section id="analysis" class="section section-dark">
+        <div class="section-heading centered">
+          <p class="section-kicker">03 / Analysis</p>
+          <h2>Analysis</h2>
+          <p class="section-lead">
+            The paper figures isolate the core transition issue: speed depends on moving resolution
+            later, but reliability depends on recovering a target-resolution latent state.
+          </p>
+        </div>
+        <div class="analysis-grid">
+          <figure class="visual-card analysis-main">
+            <div class="media-toolbar">
+              <span>Figure 1</span>
+              <span>Progressive-resolution inference</span>
+            </div>
+            <div class="analysis-frame">
+              <img src="assets/selflift_fig1_teaser.png?v=20260804" alt="Paper Figure 1 overview of SelfLift progressive-resolution inference">
+            </div>
+            <figcaption>
+              Reliable transition unlocks later low-to-high switches: prior transitions trade
+              fidelity for speed, while SelfLift preserves native high-resolution quality.
+            </figcaption>
+          </figure>
+
+          <figure class="visual-card">
+            <div class="media-toolbar">
+              <span>Figure 2</span>
+              <span>Transition consistency</span>
+            </div>
+            <div class="analysis-frame">
+              <img src="assets/selflift_fig2_analysis.png?v=20260804" alt="Paper Figure 2 analysis of latent lifting and consistency">
+            </div>
+            <figcaption>
+              Direct latent lifting is sharp but inconsistent; pixel-VAE anchoring is stable but
+              smooth. SelfLift corrects only high-risk regions toward the stable anchor.
+            </figcaption>
+          </figure>
+
+          <figure class="visual-card">
+            <div class="media-toolbar">
+              <span>Appendix Figure 1</span>
+              <span>Target-VAE round trip</span>
+            </div>
+            <div class="analysis-frame">
+              <img src="assets/selflift_appendix_fig1_consistency.png?v=20260804" alt="Appendix Figure 1 target-VAE round-trip consistency analysis">
+            </div>
+            <figcaption>
+              Round-trip consistency shows the same pattern: directly lifted latents deviate most
+              from target-VAE reachable states.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
       <section id="method" class="section section-tint">
         <div class="section-heading centered">
-          <p class="section-kicker">03 / Method Diagram</p>
+          <p class="section-kicker">04 / Method Diagram</p>
           <h2>Method Overview</h2>
           <p class="section-lead">
-            SelfLift reframes resolution transition as a self-recovering lift from a low-resolution
-            rollout to a stable high-resolution latent state, then optionally improves this trajectory
-            with on-policy self-recovering.
+            The overview figure summarizes SelfLift-zero and SelfLift-rich: a training-free
+            Artifact-Aware Consistency Lift, followed by optional On-Policy Self-Recovering training.
           </p>
         </div>
         <figure class="media-card">
@@ -224,34 +278,34 @@
             <span>Self-recovering resolution transition</span>
           </div>
           <div class="media-scroll">
-            <img src="assets/selflift_overview.png?v=20260714-1522" alt="SelfLift method overview diagram">
+            <img src="assets/selflift_overview.png?v=20260804" alt="SelfLift method overview diagram">
           </div>
           <figcaption>
-            The transition module compares latent and pixel branches, builds a delta and top-p mask,
-            and re-noises the lifted estimate into the high-resolution rollout.
+            SelfLift-zero performs explicit artifact-aware consistency lifting; SelfLift-rich replaces
+            that transition with a distilled latent lifter and an on-policy self-recovery objective.
           </figcaption>
         </figure>
       </section>
 
       <section id="experiments" class="section section-light">
         <div class="section-heading centered">
-          <p class="section-kicker">04 / Experimental Table</p>
-          <h2>Experimental Results</h2>
+          <p class="section-kicker">05 / Experimental Table</p>
+          <h2>Experimental Table</h2>
           <p class="section-lead">
-            Quantitative comparison on FLUX.2-Klein-9B and Z-Image-Turbo at 1024 x 1024 resolution.
+            Quantitative results are shown in the original paper-style table format, without
+            reformatting into a separate web table.
           </p>
         </div>
         <figure class="media-card table-card">
           <div class="media-toolbar">
-            <span>Main table</span>
-            <span>Speed, quality, and rule following</span>
+            <span>Main quantitative table</span>
+            <span>Paper screenshot</span>
           </div>
-          <div class="media-scroll">
-            <img src="assets/main_table.png?v=20260714-1245" alt="Quantitative comparison table on FLUX.2-Klein-9B and Z-Image-Turbo">
+          <div class="media-scroll paper-table-frame">
+            <img src="assets/maintable_paper_cropped.png?v=20260804" alt="Main quantitative results table from the SelfLift paper">
           </div>
           <figcaption>
-            SelfLift-rich achieves the strongest overall speed-quality trade-off across both tested
-            backbones while maintaining competitive rule-following metrics.
+            Full paper-style table from the latest source values.
           </figcaption>
         </figure>
       </section>
