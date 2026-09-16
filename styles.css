@@ -404,6 +404,13 @@ h1 {
   font-weight: 700;
 }
 
+.resource-code .badge-value small {
+  margin-left: 4px;
+  font-size: 10px;
+  font-weight: 650;
+  opacity: 0.82;
+}
+
 .variant-strip {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
